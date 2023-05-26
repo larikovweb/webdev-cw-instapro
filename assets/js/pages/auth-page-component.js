@@ -1,6 +1,6 @@
-import { loginUser, registerUser } from '../api.js';
-import { renderHeaderComponent } from './header-component.js';
-import { renderUploadImageComponent } from './upload-image-component.js';
+import { loginUser, registerUser } from '../api/index.js';
+import { renderHeaderComponent } from '../components/header-component.js';
+import { renderUploadImageComponent } from '../components/upload-image-component.js';
 
 export function renderAuthPageComponent({ appEl, setUser }) {
   let isLoginMode = true;

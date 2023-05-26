@@ -1,4 +1,4 @@
-import { renderHeaderComponent } from './header-component.js';
+import { renderHeaderComponent } from '../components/header-component.js';
 
 export function renderLoadingPageComponent({ appEl, user, goToPage }) {
   const appHtml = `
