@@ -1,10 +1,10 @@
-import { loginUser, registerUser } from "../api.js";
-import { renderHeaderComponent } from "./header-component.js";
-import { renderUploadImageComponent } from "./upload-image-component.js";
+import { loginUser, registerUser } from '../api.js';
+import { renderHeaderComponent } from './header-component.js';
+import { renderUploadImageComponent } from './upload-image-component.js';
 
 export function renderAuthPageComponent({ appEl, setUser }) {
   let isLoginMode = true;
-  let imageUrl = "";
+  let imageUrl = '';
 
   const renderForm = () => {
     const appHtml = `
@@ -12,11 +12,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
           <div class="header-container"></div>
           <div class="form">
               <h3 class="form-title">
-                ${
-                  isLoginMode
-                    ? "Вход в&nbsp;Instapro"
-                    : "Регистрация в&nbsp;Instapro"
-                }
+                ${isLoginMode ? 'Вход в&nbsp;Instapro' : 'Регистрация в&nbsp;Instapro'}
                 </h3>
               <div class="form-inputs">
     
@@ -26,7 +22,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
                       <div class="upload-image-container"></div>
                       <input type="text" id="name-input" class="input" placeholder="Имя" />
                       `
-                      : ""
+                      : ''
                   }
                   
                   <input type="text" id="login-input" class="input" placeholder="Логин" />
@@ -35,15 +31,15 @@ export function renderAuthPageComponent({ appEl, setUser }) {
                   <div class="form-error"></div>
                   
                   <button class="button" id="login-button">${
-                    isLoginMode ? "Войти" : "Зарегистрироваться"
+                    isLoginMode ? 'Войти' : 'Зарегистрироваться'
                   }</button>
               </div>
             
               <div class="form-footer">
                 <p class="form-footer-title">
-                  ${isLoginMode ? "Нет аккаунта?" : "Уже есть аккаунт?"}
+                  ${isLoginMode ? 'Нет аккаунта?' : 'Уже есть аккаунт?'}
                   <button class="link-button" id="toggle-button">
-                    ${isLoginMode ? "Зарегистрироваться." : "Войти."}
+                    ${isLoginMode ? 'Зарегистрироваться.' : 'Войти.'}
                   </button>
                 </p> 
                
@@ -57,38 +53,38 @@ export function renderAuthPageComponent({ appEl, setUser }) {
     // Не вызываем перерендер, чтобы не сбрасывалась заполненная форма
     // Точечно обновляем кусочек дом дерева
     const setError = (message) => {
-      appEl.querySelector(".form-error").textContent = message;
+      appEl.querySelector('.form-error').textContent = message;
     };
 
     renderHeaderComponent({
-      element: document.querySelector(".header-container"),
+      element: document.querySelector('.header-container'),
     });
 
-    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+    const uploadImageContainer = appEl.querySelector('.upload-image-container');
 
     if (uploadImageContainer) {
       renderUploadImageComponent({
-        element: appEl.querySelector(".upload-image-container"),
+        element: appEl.querySelector('.upload-image-container'),
         onImageUrlChange(newImageUrl) {
           imageUrl = newImageUrl;
         },
       });
     }
 
-    document.getElementById("login-button").addEventListener("click", () => {
-      setError("");
+    document.getElementById('login-button').addEventListener('click', () => {
+      setError('');
 
       if (isLoginMode) {
-        const login = document.getElementById("login-input").value;
-        const password = document.getElementById("password-input").value;
+        const login = document.getElementById('login-input').value;
+        const password = document.getElementById('password-input').value;
 
         if (!login) {
-          alert("Введите логин");
+          alert('Введите логин');
           return;
         }
 
         if (!password) {
-          alert("Введите пароль");
+          alert('Введите пароль');
           return;
         }
 
@@ -104,25 +100,25 @@ export function renderAuthPageComponent({ appEl, setUser }) {
             setError(error.message);
           });
       } else {
-        const login = document.getElementById("login-input").value;
-        const name = document.getElementById("name-input").value;
-        const password = document.getElementById("password-input").value;
+        const login = document.getElementById('login-input').value;
+        const name = document.getElementById('name-input').value;
+        const password = document.getElementById('password-input').value;
         if (!name) {
-          alert("Введите имя");
+          alert('Введите имя');
           return;
         }
         if (!login) {
-          alert("Введите логин");
+          alert('Введите логин');
           return;
         }
 
         if (!password) {
-          alert("Введите пароль");
+          alert('Введите пароль');
           return;
         }
 
         if (!imageUrl) {
-          alert("Не выбрана фотография");
+          alert('Не выбрана фотография');
           return;
         }
 
@@ -142,7 +138,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
       }
     });
 
-    document.getElementById("toggle-button").addEventListener("click", () => {
+    document.getElementById('toggle-button').addEventListener('click', () => {
       isLoginMode = !isLoginMode;
       renderForm();
     });

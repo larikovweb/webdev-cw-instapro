@@ -4,19 +4,19 @@
 */
 
 @font-face {
-  font-family: "StratosSkyeng";
+  font-family: 'StratosSkyeng';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("./assets/fonts/stratosskyengweb-regular.woff2") format("woff2");
+  src: url('../fonts/stratosskyengweb-regular.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "StratosSkyeng";
+  font-family: 'StratosSkyeng';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("./assets/fonts/stratosskyengweb-medium.woff2") format("woff2");
+  src: url('../fonts/stratosskyengweb-medium.woff2') format('woff2');
 }
 
 html {
@@ -67,8 +67,8 @@ p {
   background-color: #6d73ff;
 }
 
-.button[disabled="true"],
-.secondary-button[disabled="true"] {
+.button[disabled='true'],
+.secondary-button[disabled='true'] {
   background-color: #f4f5f6;
   color: rgba(153, 153, 153, 0.6);
   pointer-events: none;
