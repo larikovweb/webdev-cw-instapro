@@ -3,7 +3,6 @@ import { renderUploadImageComponent } from '../components/upload-image-component
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   let imageUrl = '';
   const render = () => {
-    // TODO: Реализовать страницу добавления поста
     const container = document.createElement('div');
     container.classList.add('page-container');
     container.innerHTML = `
@@ -27,6 +26,9 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     });
 
     container.querySelector('#add-button').addEventListener('click', () => {
+      if (!imageUrl || !appEl.querySelector('#description-input').value) {
+        return;
+      }
       onAddPostClick({
         description: appEl.querySelector('#description-input').value,
         imageUrl: imageUrl,

@@ -1,5 +1,5 @@
-// var formatDistanceToNow = require('date-fns/formatDistanceToNow');
-
+import { sendLike } from '../api/index.js';
+import { formatDate } from '../helpers/index.js';
 export const postTemplate = (post) => {
   const { createdAt, description, id, imageUrl, isLiked, likes, user } = post;
 
@@ -26,9 +26,22 @@ export const postTemplate = (post) => {
       ${description}
     </p>
     <p class="post-date">
-    1 min ago
+    ${formatDate(new Date(createdAt))}
     </p>
   `;
+
+  el.querySelector('.like-button').addEventListener('click', () => {
+    const like = el.querySelector('.like-button img');
+    const counter = el.querySelector('.post-likes-text strong');
+    sendLike(id, isLiked);
+    if (like.src.split('/')[like.src.split('/').length - 1] !== 'like-active.svg') {
+      like.src = './assets/images/like-active.svg';
+      counter.textContent = +counter.textContent + 1;
+    } else {
+      like.src = './assets/images/like-not-active.svg';
+      counter.textContent = +counter.textContent - 1;
+    }
+  });
 
   return el;
 };

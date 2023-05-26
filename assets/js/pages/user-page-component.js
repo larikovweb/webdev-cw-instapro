@@ -3,8 +3,10 @@ import { renderHeaderComponent } from '../components/header-component.js';
 import { posts, goToPage } from '../index.js';
 import { postTemplate } from '../components/post-template-component.js';
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderUserPostsPageComponent({ appEl }, userId) {
+  // TODO: реализовать рендер постов из api
   console.log('Актуальный список постов:', posts);
+  console.log(appEl);
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
@@ -13,6 +15,8 @@ export function renderPostsPageComponent({ appEl }) {
   container.classList.add('page-container');
   container.innerHTML = `
       <div class="header-container"></div>
+      <h1>Посты пользователя ${posts[0].user.name}</h1>
+      <img width="200" src="${posts[0].user.imageUrl}"/>
       <ul class="posts"></ul>
   `;
 

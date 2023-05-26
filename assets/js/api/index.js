@@ -5,11 +5,11 @@ const personalKey = 'prod';
 const baseHost = 'https://webdev-hw-api.vercel.app';
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
-export function getPosts({ token }) {
+export function getPosts() {
   return fetch(postsHost, {
     method: 'GET',
     headers: {
-      Authorization: token,
+      Authorization: getToken(),
     },
   })
     .then((response) => {
@@ -41,6 +41,32 @@ export const getUserPosts = (userId) => {
     .then((data) => {
       return data.posts;
     });
+};
+
+export const sendLike = (postId, isLiked) => {
+  if (isLiked) {
+    return fetch(`${postsHost}/${postId}/dislike`, {
+      method: 'POST',
+      headers: {
+        Authorization: getToken(),
+      },
+    }).then((response) => {
+      if (response.status === 401) {
+        throw new Error('Нет авторизации');
+      }
+    });
+  } else {
+    return fetch(`${postsHost}/${postId}/like`, {
+      method: 'POST',
+      headers: {
+        Authorization: getToken(),
+      },
+    }).then((response) => {
+      if (response.status === 401) {
+        throw new Error('Нет авторизации');
+      }
+    });
+  }
 };
 
 export const sendPost = (post) => {
