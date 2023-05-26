@@ -1,20 +1,35 @@
+import { renderUploadImageComponent } from '../components/upload-image-component.js';
+
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+  let imageUrl = '';
   const render = () => {
     // TODO: Реализовать страницу добавления поста
-    const appHtml = `
-    <div class="page-container">
+    const container = document.createElement('div');
+    container.classList.add('page-container');
+    container.innerHTML = `
       <div class="header-container"></div>
-      Cтраница добавления поста
+      <form class="form">
+        <h3 class="form-title">Добавить пост</h3>
+        <div class="upload-image-container"></div>
+        <input type="text" id="description-input" placeholder="Описание поста" />
+      </form>
       <button class="button" id="add-button">Добавить</button>
-    </div>
-  `;
+    `;
 
-    appEl.innerHTML = appHtml;
+    appEl.innerHTML = '';
+    appEl.append(container);
 
-    document.getElementById("add-button").addEventListener("click", () => {
+    renderUploadImageComponent({
+      element: appEl.querySelector('.upload-image-container'),
+      onImageUrlChange(newImageUrl) {
+        imageUrl = newImageUrl;
+      },
+    });
+
+    container.querySelector('#add-button').addEventListener('click', () => {
       onAddPostClick({
-        description: "Описание картинки",
-        imageUrl: "https://image.png",
+        description: appEl.querySelector('#description-input').value,
+        imageUrl: imageUrl,
       });
     });
   };

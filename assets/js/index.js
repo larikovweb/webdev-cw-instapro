@@ -1,4 +1,4 @@
-import { getPosts } from './api/index.js';
+import { getPosts, getUserPosts, sendPost } from './api/index.js';
 import { renderAddPostPageComponent } from './pages/add-post-page-component.js';
 import { renderAuthPageComponent } from './pages/auth-page-component.js';
 import {
@@ -14,16 +14,12 @@ import {
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
   saveUserToLocalStorage,
+  getToken,
 } from './helpers/index.js';
 
 export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
-
-const getToken = () => {
-  const token = user ? `Bearer ${user.token}` : undefined;
-  return token;
-};
 
 export const logout = () => {
   user = null;
@@ -59,11 +55,19 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // TODO: реализовать получение постов юзера из API
       console.log('Открываю страницу пользователя: ', data.userId);
       page = USER_POSTS_PAGE;
-      posts = [];
-      return renderApp();
+
+      return getUserPosts(data.userId)
+        .then((newPosts) => {
+          page = POSTS_PAGE;
+          posts = newPosts;
+          renderApp();
+        })
+        .catch((error) => {
+          console.error(error);
+          goToPage(POSTS_PAGE);
+        });
     }
 
     page = newPage;
@@ -103,7 +107,7 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
-        console.log('Добавляю пост...', { description, imageUrl });
+        sendPost({ description, imageUrl });
         goToPage(POSTS_PAGE);
       },
     });
@@ -115,11 +119,11 @@ const renderApp = () => {
     });
   }
 
-  if (page === USER_POSTS_PAGE) {
-    // TODO: реализовать страницу фотографию пользвателя
-    appEl.innerHTML = 'Здесь будет страница фотографий пользователя';
-    return;
-  }
+  // if (page === USER_POSTS_PAGE) {
+  //   // TODO: реализовать страницу фотографию пользвателя
+  //   appEl.innerHTML = 'Здесь будет страница фотографий пользователя';
+  //   return;
+  // }
 };
 
 goToPage(POSTS_PAGE);
