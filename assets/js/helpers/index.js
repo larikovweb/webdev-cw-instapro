@@ -49,3 +49,7 @@ export function formatDate(date) {
 
   return d.slice(0, 3).join('.') + ' ' + d.slice(3).join(':');
 }
+
+export const protectionInnerHTML = (text) => {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+};
